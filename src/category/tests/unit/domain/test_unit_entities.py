@@ -32,7 +32,8 @@ class TestCategoryUnit(unittest.TestCase):
     def test_if_created_at_is_generated_in_constructor(self):
         category_1 = Category(name='Movie 1')
         category_2 = Category(name='Movie 2')
-        self.assertNotEqual(category_1.created_at.timestamp(), category_2.created_at.timestamp())
+        self.assertNotEqual(category_1.created_at.timestamp(),
+                            category_2.created_at.timestamp())
 
     def test_is_immutable(self):
         with self.assertRaises(FrozenInstanceError):

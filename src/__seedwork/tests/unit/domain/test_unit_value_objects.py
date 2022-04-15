@@ -40,7 +40,8 @@ class TestValueObjectUnit(unittest.TestCase):
         self.assertEqual(vo_1.prop, str(vo_1))
 
         vo_2 = StubTwoProp(prop_1='value_1', prop_2='value_2')
-        self.assertEqual('{"prop_1": "value_1", "prop_2": "value_2"}', str(vo_2))
+        self.assertEqual(
+            '{"prop_1": "value_1", "prop_2": "value_2"}', str(vo_2))
 
     def test_is_immutable(self):
         with self.assertRaises(FrozenInstanceError):
@@ -63,7 +64,8 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             with self.assertRaises(InvalidUuidException) as assert_error:
                 UniqueEntityId(id='fake id')
             mock_validate.assert_called_once()
-            self.assertEqual(assert_error.exception.args[0], 'ID must be a valid UUID')
+            self.assertEqual(
+                assert_error.exception.args[0], 'ID must be a valid UUID')
 
     def test_accept_uuid_passed_in_constructor(self):
         with patch.object(
@@ -72,9 +74,11 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
                 autospec=True,
                 side_effect=UniqueEntityId._UniqueEntityId__validate
         ) as mock_validate:
-            value_object = UniqueEntityId(id='ac12a9c5-e73a-4751-a5dc-49e3679b3614')
+            value_object = UniqueEntityId(
+                id='ac12a9c5-e73a-4751-a5dc-49e3679b3614')
             mock_validate.assert_called_once()
-            self.assertEqual(value_object.id, 'ac12a9c5-e73a-4751-a5dc-49e3679b3614')
+            self.assertEqual(
+                value_object.id, 'ac12a9c5-e73a-4751-a5dc-49e3679b3614')
 
             uuid_value = uuid.uuid4()
             value_object = UniqueEntityId(id=uuid_value)
@@ -97,5 +101,7 @@ class TestUniqueEntityIdUnit(unittest.TestCase):
             value_object.id = 'fake id'
 
     def test_convert_to_str(self):
-        value_object = UniqueEntityId(id='ac12a9c5-e73a-4751-a5dc-49e3679b3614')
-        self.assertEqual(str(value_object), 'ac12a9c5-e73a-4751-a5dc-49e3679b3614')
+        value_object = UniqueEntityId(
+            id='ac12a9c5-e73a-4751-a5dc-49e3679b3614')
+        self.assertEqual(str(value_object),
+                         'ac12a9c5-e73a-4751-a5dc-49e3679b3614')
